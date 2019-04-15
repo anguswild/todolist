@@ -26,7 +26,7 @@ class TodosController extends Controller
      */
     public function create()
     {
-        //
+        return view('todos.create');
     }
 
     /**
@@ -37,7 +37,23 @@ class TodosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request, [
+        'text' => 'required',
+        'body' => 'required',
+        'due' => 'required'
+      ]);
+
+      $todo = new Todo;
+      $todo->text = $request->input('text');
+      $todo->body = $request->input('body');
+      $todo->due = $request->input('due');
+      //Save Message
+      $todo->save();
+      //Redirect
+      return redirect('todo/create')->with('success', 'Todo Created');
+
+
+
     }
 
     /**
